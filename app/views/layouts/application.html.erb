@@ -13,9 +13,9 @@
 
     <div id="wrapper">
 
-      <%= flash[:notice] %>
+      <% if flash[:notice] %>
         <p class= "flash notice">
-          <%= flash [:notice] %>
+          <%= flash[:notice] %>
         </p>
       <% end %>
 

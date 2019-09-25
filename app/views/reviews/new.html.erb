@@ -1,0 +1,25 @@
+<header id="content-header">
+  <h1>New Review for <%= link_to(@movie.title, @movie) %></h1>
+</header>
+
+<%= form_for([@movie, @reviews]) do |f| %>
+  <%= render "shared/errors", object: @reviews  %>
+  <fieldset>
+    <ol>
+      <li class="required">
+        <%= f.label :name %>
+        <%= f.text_field :name, size: 40, autofocus: true %>
+      </li>
+      <li class="required stars">
+        <%= f.label :stars %>
+        <%= f.select :stars, Review::STARS, prompt: "Pick one" %>
+      </li>
+      <li class="required">
+        <%= f.label :coment %>
+        <%= f.text_area :comment, cols: 80, placeholder: "What did you think?" %>
+      </li>
+    <ol>
+  <p>
+    <%= f.submit 'Post Review' %>
+  </p>
+<% end %>
