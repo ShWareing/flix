@@ -53,6 +53,10 @@ group :test do
   gem "capybara", "2.7.1"
 end
 
+group :development, :test do
+  gem 'sqlite3', '~> 1.4.1'
+end
+
 group :production do
   gem 'pg'
 end
