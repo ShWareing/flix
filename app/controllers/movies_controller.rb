@@ -13,7 +13,7 @@ class MoviesController < ApplicationController
     @fans = @movie.fans
 
     if current_user
-      @favorite_movies = current_user.favorites.find_by(movie_id: @movie.id)
+      @current_favorite = current_user.favorites.find_by(movie_id: @movie.id)
     end
 
     @genres = @movie.genres
@@ -36,7 +36,7 @@ class MoviesController < ApplicationController
     @movie = Movie.new
   end
 
-  
+  def create
     @movie = Movie.new()
     if @movie.save
       redirect_to @movie, notice: "Movie successfully created!"
