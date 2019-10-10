@@ -1,5 +1,10 @@
 require 'rails_helper'
 
+before do
+   = User.create!(user_attributes(: true))
+  sign_in()
+end
+
 describe "Deleting a movie" do
   it "destroys the movie and shows the movie listing without the deleted movie" do
     movie = Movie.create(movie_attributes)

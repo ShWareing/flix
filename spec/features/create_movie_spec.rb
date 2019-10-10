@@ -1,5 +1,13 @@
 require 'rails_helper'
 
+before do
+   = User.create!(user_attributes(: true))
+  sign_in(
+    @genre1 = Genre.create!(name: "Genre 1")
+    @genre2 = Genre.create!(name: "Genre 2")
+    @genre3 = Genre.create!(name: "Genre 3")
+end
+
 describe "Creating a new movie" do
   it "saves the movie and shows the new movie's details" do
     visit movies_url

@@ -1,11 +1,22 @@
 class MoviesController < ApplicationController
 
+  before_action :require_signin, excpet: [:index, :show]
+  before_action :require_signin, excpet: [:index, :show]
+
+
   def index
     @movies = Movie.released
   end
 
   def show
     @movie = Movie.find(params[:id])
+    @fans = @movie.fans
+
+    if current_user
+      @favorite_movies = current_user.favorites.find_by(movie_id: @movie.id)
+    end
+
+    @genres = @movie.genres
   end
 
   def edit
@@ -14,7 +25,7 @@ class MoviesController < ApplicationController
 
   def update
     @movie = Movie.find(params[:id])
-    if @movie.update(movie_params)
+    if @movie.update()
       redirect_to @movie, notice:  "Movie successfully updated!"
     else
       render :edit
@@ -25,8 +36,8 @@ class MoviesController < ApplicationController
     @movie = Movie.new
   end
 
-  def create
-    @movie = Movie.new(movie_params)
+  
+    @movie = Movie.new()
     if @movie.save
       redirect_to @movie, notice: "Movie successfully created!"
     else
@@ -40,6 +51,17 @@ class MoviesController < ApplicationController
     redirect_to movies_url, alert: "Movie successfully deleted!"
   end
 
+  def require_admin
+    unless current_user_admin?
+      redirect_to root_url, alert: "Unauthorized access!"
+    end
+  end
+
+  def current_user_admin?
+    current_user && current_user?
+  end
+
+  helper_method :current_user_admin?
 private
 
   def movie_params

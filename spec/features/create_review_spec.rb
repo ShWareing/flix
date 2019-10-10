@@ -1,4 +1,8 @@
 require 'rails_helper'
+before do
+  @user = User.create!(user_attributes)
+  sign_in(@user)
+end
 
 describe "Creating a new review" do
   it "saves the review" do
@@ -31,5 +35,6 @@ describe "Creating a new review" do
     }.not_to change(Review, :count)
 
     expect(page).to have_text('error')
+    expect(page).to have_text(@user.name)
   end
 end
